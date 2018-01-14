@@ -5,27 +5,30 @@
 * Rails version 5.1.4
 
  * To run the app 
- - rails db:create db:migrat db:seed
+ 	 rails db:create db:migrat db:seed
 
 
- - Task 1 & 2
-    <pre>
-        class Array
-					def khaled_map(&block)
-						result = []
-						each do |element|
-							result << block.call(element)
-						end
-						result
-					end
-        end
-    </pre>
+Task 1 & 2
+
+<pre>
+
+		class Array
+			def khaled_map(&block)
+				result = []
+				each do |element|
+					result << block.call(element)
+				end
+				result
+			end
+		end
+		
+</pre>
 
 ---------------------
 1- 
 	http://localhost:3000/api/v1/khaled/articles
 
-out: 
+output: 
 <pre>
 {
     "owner_name": "khaled",
@@ -54,7 +57,9 @@ out:
 
 ------------
 
-2- http://localhost:3000/api/v1/articles/1
+2- 
+	http://localhost:3000/api/v1/articles/1
+
 output:
 <pre>
 {
@@ -66,7 +71,8 @@ output:
 }
 </pre> 
 
-3- http://localhost:3000/api/v1/owners?params[length]=10&params[offset]=20&params[order_mode]=ASC
+3- 
+	http://localhost:3000/api/v1/owners?params[length]=10&params[offset]=20&params[order_mode]=ASC
 
 output:
 <pre>
@@ -94,7 +100,10 @@ output:
 }
 </pre>
 
-4- http://localhost:3000/api/v1/khaled
+4- 
+	http://localhost:3000/api/v1/khaled
+
+output:
 
 <pre>
 {
