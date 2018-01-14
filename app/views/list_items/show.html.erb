@@ -1,0 +1,28 @@
+<b><%= button_to 'Active Lists', root_path, method: :get %></b>
+<br>
+<h2><%= @list_item.name%></h2><br>
+
+<b>assigned tags:</b>
+<table>
+	<tbody>
+			<% @list_item.current_tags.each do |tag| %>
+			<tr>
+				<td>-<%= tag.name %></td>
+				<td><%= button_to 'Soft Destroy',soft_destroy_list_item_taggings_path(list_item_id: @list_item.id, tag_id: tag.id ), method: :put,data: { confirm: 'Are you sure?' } %></td>
+			</tr>
+			<% end %>
+	</tbody>
+<table>
+<br>
+
+<b>removed tags:</b>
+<table>
+	<tbody>
+			<% @list_item.removed_tags.each do |tag| %>
+			<tr>
+				<td>-<%= tag.name %></td>
+				<td><%= button_to 'Restore',restore_list_item_taggings_path(list_item_id: @list_item.id, tag_id: tag.id ), method: :put,data: { confirm: 'Are you sure?' } %></td>
+			</tr>
+			<% end %>
+	</tbody>
+<table>

@@ -1,0 +1,26 @@
+<b><%= button_to 'Active Lists', root_path, method: :get %></b>
+<h1>Thrash Lists</h1>
+<table>
+  <tbody>
+	<% @lists.each do |list| %>
+	  <tr>
+			<td><h3><%= list.name %><h3></td>
+			<td><%= button_to 'Restore List', { action: "restore", id: list.id }, method: :put %></td>
+			<td><%= button_to 'Delete', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+	</tbody>
+</table>
+	  <table>
+			<tbody>
+				<% list.list_items.soft_destroyed.each do |list_item| %>
+					<tr>
+						<td><%= list_item.name %></td>
+						<td>- <%= list_item.deleted_at.nil? ? "false" : "deleted" %></td>
+						<td><%=list_item.tags.map{|tag| tag.name}%></td>
+					</tr>
+				<% end %>
+			</tbody>
+		<table>
+		<hr>
+	<% end %>
+<br>

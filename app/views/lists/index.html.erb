@@ -1,0 +1,36 @@
+<b><%= button_to 'New List', new_list_path, method: :get %></b>
+<br>
+<b><%= button_to 'Thrash Lists', thrash_lists_path, method: :get %></b>
+
+
+<h1>Lists</h1>
+<table>
+  <tbody>
+	<% @lists.each do |list| %>
+	  <tr>
+			<td><h3><%= list.name %><h3></td>
+			<td><%= button_to 'Edit', edit_list_path(list), method: :get %></td>
+			<td><%= button_to 'Soft Destroy',{ action: "soft_destroy", id: list.id }, method: :put %></td>
+			<td><%= button_to 'Delete', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		</tr>
+	</tbody>
+</table>
+	  <table>
+			<tbody>
+				<% list.list_items.active.each do |list_item| %>
+					<tr>
+						<td><b><%= list_item.name %></b></td>
+						<td><%= button_to 'View', list_list_item_path(id: list.id, list_id: list_item.list.id), method: :get %></td>
+						<td><%= button_to 'Edit', edit_list_list_item_path(id: list.id, list_id: list_item.list.id), method: :get %></td>
+						<td><%= button_to 'Soft Destroy',{ action: "soft_destroy", id: list_item.id }, method: :put %></td>
+						<td><%= button_to 'Delete', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					</tr>
+					<tr>
+						<td>tags: <%= list_item.current_tags.map{|tag| tag.name}%></td>
+					</tr>
+				<% end %>
+			</tbody>
+		<table>
+		<hr>
+	<% end %>
+<br>
