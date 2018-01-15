@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     resources :list_items
   end 
   resources :list_items do
+    member do 
+      put :soft_destroy 
+    end 
     resources :taggings do 
       collection do 
         put ":tag_id/soft_destroy"   =>   "taggings#soft_destroy", as: "soft_destroy"
