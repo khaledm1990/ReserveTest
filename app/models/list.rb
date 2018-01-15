@@ -8,6 +8,7 @@ class List < ApplicationRecord
     after_restore :restore_list_items
 
     has_many :list_items, dependent: :destroy
+    validates :name, presence: true
 
     scope :active, -> {where('deleted_at IS NULL')}
     scope :soft_destroyed, -> {where('deleted_at IS NOT NULL')}
