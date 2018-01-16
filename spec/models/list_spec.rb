@@ -5,22 +5,22 @@ RSpec.describe List, type: :model do
 
   describe "columns" do 
     it "should has colimn name as string" do 
-      expect have_db_column(:name)
+      expect(list).to have_db_column(:name)
     end 
     it "should has colimn deleted_at as datetime " do 
-      expect have_db_column(:deleted_at)
+      expect(list).to have_db_column(:deleted_at)
     end
   end 
 
   describe "validation" do 
     it "require name" do 
-      is_expected.to validate_presence_of(:name)
+      expect(list).to validate_presence_of(:name)
     end 
   end 
 
   describe "associations" do 
     it "should has_many list_items" do 
-      expect(list).to have_many(:list_items)
+      expect(list).to have_many(:list_items).dependent(:destroy)
     end 
   end 
 
