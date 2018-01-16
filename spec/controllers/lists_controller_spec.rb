@@ -81,7 +81,7 @@ RSpec.describe ListsController, type: :controller do
         list.reload
         expect(list.name).to eq(second_list.name)
       end 
-      it "should change the list attributes" do 
+      it "should redirect to root path" do 
         put :update,params: {id: list.id, list: FactoryGirl.attributes_for(:second_list)}
         expect(response).to redirect_to(root_path)
       end 
@@ -94,4 +94,29 @@ RSpec.describe ListsController, type: :controller do
     end 
   end 
 
+  describe "PUT soft_destroy" do 
+    it "should soft delete the list " do 
+      put :soft_destroy, params: {id: list.id}
+      list.reload
+      expect(list.deleted_at).not_to eq(nil)
+    end
+
+    it "should redirect to root path " do 
+      put :soft_destroy, params: {id: list.id}
+      expect(response).to redirect_to(root_path)
+    end
+  end 
+
+  describe "PUT restore" do 
+    it "should restore the list " do 
+      put :restore, params: {id: list.id}
+      list.reload
+      expect(list.deleted_at).to eq(nil)
+    end
+
+    it "should redirect to thrush path " do 
+      put :restore, params: {id: list.id}
+      expect(response).to redirect_to(thrash_lists_path)
+    end
+  end
 end
