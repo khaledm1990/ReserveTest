@@ -65,6 +65,10 @@ RSpec.describe ListsController, type: :controller do
       get :edit,params: {id: list.id, list: list_att}
       expect(response).to render_template :edit
     end 
+    it "should locate the requested list " do 
+      get :edit ,params: {id: list.id}
+      expect(assigns(:list)).to eq(list)
+    end
   end 
 
 
@@ -95,6 +99,12 @@ RSpec.describe ListsController, type: :controller do
   end 
 
   describe "PUT soft_destroy" do 
+
+    it "should locate the requested list " do 
+      get :edit ,params: {id: list.id}
+      expect(assigns(:list)).to eq(list)
+    end
+    
     it "should soft delete the list " do 
       put :soft_destroy, params: {id: list.id}
       list.reload
@@ -108,13 +118,19 @@ RSpec.describe ListsController, type: :controller do
   end 
 
   describe "PUT restore" do 
+
+    it "should locate the requested list " do 
+      get :edit ,params: {id: list.id}
+      expect(assigns(:list)).to eq(list)
+    end
+
     it "should restore the list " do 
       put :restore, params: {id: list.id}
       list.reload
       expect(list.deleted_at).to eq(nil)
     end
 
-    it "should redirect to thrush path " do 
+    it "should redirect to thrush_path " do 
       put :restore, params: {id: list.id}
       expect(response).to redirect_to(thrash_lists_path)
     end
@@ -122,9 +138,16 @@ RSpec.describe ListsController, type: :controller do
 
   describe "DELETE destroy" do 
     let!(:list) {create :list}
+
+    it "should locate the requested list " do 
+      get :edit ,params: {id: list.id}
+      expect(assigns(:list)).to eq(list)
+    end
+
     it "should delete the list " do 
       expect{ put :destroy, params: {id: list.id} }.to change(List, :count).by(-1)
     end
+
 
     it "should redirect to thrush path " do 
       delete :destroy, params: {id: list.id}
