@@ -39,7 +39,7 @@ RSpec.describe ListsController, type: :controller do
   describe "POST create" do 
     context "with valid attributes" do 
       it " should save the new list" do 
-        expect{ post :create, params: {list: FactoryGirl.attributes_for(:list)} }.to  change(List,:count)
+        expect{ post :create, params: {list: FactoryGirl.attributes_for(:list)} }.to  change(List,:count).by(1)
       end 
       it " should redirect to root path" do 
         post :create, params: {list: FactoryGirl.attributes_for(:list) }
@@ -117,6 +117,18 @@ RSpec.describe ListsController, type: :controller do
     it "should redirect to thrush path " do 
       put :restore, params: {id: list.id}
       expect(response).to redirect_to(thrash_lists_path)
+    end
+  end
+
+  describe "DELETE destroy" do 
+    let!(:list) {create :list}
+    it "should delete the list " do 
+      expect{ put :destroy, params: {id: list.id} }.to change(List, :count).by(-1)
+    end
+
+    it "should redirect to thrush path " do 
+      delete :destroy, params: {id: list.id}
+      expect(response).to redirect_to(root_path)
     end
   end
 end
