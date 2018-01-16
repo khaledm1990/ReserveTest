@@ -22,7 +22,7 @@
 						<td><b><%= list_item.name %></b></td>
 						<td><%= button_to 'View', list_list_item_path(id: list.id, list_id: list_item.list.id), method: :get %></td>
 						<td><%= button_to 'Edit', edit_list_list_item_path(id: list.id, list_id: list_item.list.id), method: :get %></td>
-						<td><%= button_to 'Soft Destroy',{ action: "soft_destroy", id: list_item.id }, method: :put %></td>
+						<td><%= button_to 'Soft Destroy',soft_destroy_list_item_path(list_item.id), method: :put %></td>
 						<td><%= button_to 'Delete', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 					</tr>
 					<tr>

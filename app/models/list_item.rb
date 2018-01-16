@@ -10,6 +10,8 @@ class ListItem < ApplicationRecord
 	has_many :current_tags ,-> {where('deleted_at IS NULL')} ,foreign_key: "tag_id", source: :tag, through: :taggings
 	has_many :removed_tags ,-> {where('deleted_at IS NOT NULL')} ,foreign_key: "tag_id", source: :tag, through: :taggings
 
+	validates :name, presence: true
+
 	belongs_to :list
 
 	scope :active, -> {where('deleted_at IS NULL')}
@@ -17,12 +19,10 @@ class ListItem < ApplicationRecord
 
 
 	def soft_destroy_taggings
-		puts "soft_destroy_taggings called"
 		self.taggings.each {|tagging| tagging.soft_destroy }
 	end 
 
 	def restore_taggings
-		puts "soft_destroy_taggings called"
 		self.taggings.each {|tagging| tagging.restore }
 	end 
 end
