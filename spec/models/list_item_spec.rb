@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe ListItem, type: :model do
   let(:list_item) {create :list_item}
   let(:list_item_with_tags) {create :list_item_with_tags}
+  let(:soft_deleted_list_item) {create :soft_deleted_list_item}
 
   describe "columns" do 
     it "should has colimn name as string" do 
@@ -57,6 +58,21 @@ RSpec.describe ListItem, type: :model do
     end 
     it " soft_destroyed return all list_items where deleted_at is NOT nil" do 
       expect(ListItem.soft_destroyed.first).to eq(soft_deleted_list_item)
+    end 
+  end
+
+  describe "soft_destroy" do 
+    let(:time) {Time.now}
+    before { Timecop.freeze(time) }
+    it "should change deleted_at " do
+      expect{ list_item.soft_destroy }.to change{ list_item.deleted_at }.from(nil).to(time)
+    end 
+
+  end 
+
+  describe "restore" do 
+    it "should change deleted_at to nil" do 
+      expect{ soft_deleted_list_item.restore }.to change{ soft_deleted_list_item.deleted_at }.to(nil)
     end 
   end
 end

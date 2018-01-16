@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe List, type: :model do
   let(:list) {create :list}
+  let(:soft_deleted_list) {create :soft_deleted_list}
 
   describe "columns" do 
     it "should has colimn name as string" do 
@@ -43,4 +44,19 @@ RSpec.describe List, type: :model do
       expect(List.soft_destroyed.first).to eq(soft_deleted_list)
     end 
   end 
+
+  describe "soft_destroy" do 
+    let(:time) {Time.now}
+    before { Timecop.freeze(time) }
+    it "should change deleted_at " do
+      expect{ list.soft_destroy }.to change{ list.deleted_at }.from(nil).to(time)
+    end 
+
+  end 
+
+  describe "restore" do 
+    it "should change deleted_at to nil" do 
+      expect{ soft_deleted_list.restore }.to change{ soft_deleted_list.deleted_at }.to(nil)
+    end 
+  end
 end
