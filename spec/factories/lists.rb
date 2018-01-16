@@ -3,6 +3,10 @@ FactoryGirl.define do
     name Faker::Book.title
   end
 
+  factory :second_list, class: List do
+    name Faker::Book.title
+  end
+
   factory :invalid_list, class: List do 
     name nil
   end 
